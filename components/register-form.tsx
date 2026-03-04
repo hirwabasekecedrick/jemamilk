@@ -1,42 +1,49 @@
-"use client"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+"use client";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { useState } from "react"
-import Image from "next/image"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import Image from "next/image";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
-export function LoginForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [email,setEmail] = useState("")
-      const [password,setPassword] = useState("")
-  
-      const handleSubmit = async (e : React.FormEvent) => {
-          e.preventDefault();
-  
-          const res = await fetch("api/login",{
-              method: "POST",
-              headers: {"Content-Type": "application/json"},
-              body: JSON.stringify({email,password})
-          })
-  
-          if (res.ok) {
-              const data = await res.json();
-              return console.log("User Login Succesful",data);
-              
-          }else{
-              return console.log("Failed To log in ")
-          }
-      }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("CUSTOMER");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await fetch("api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, role }),
+    });
+    if (res.ok) {
+      console.log("Registration Successful");
+      const data = await res.json();
+      console.log(data);
+    } else {
+      console.log("Registration Failed Miserably");
+    }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -46,7 +53,7 @@ export function LoginForm({
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-balance text-muted-foreground">
-                  Login to your Acme Inc account
+                  Login to your Jemamilk Inc account
                 </p>
               </div>
               <Field>
@@ -60,6 +67,20 @@ export function LoginForm({
                 />
               </Field>
               <Field>
+                <FieldLabel htmlFor="role">Role</FieldLabel>
+                <Select onValueChange={(value) => setRole(value)} required>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="CUSTOMER">Customer</SelectItem>
+                    <SelectItem value="ADMIN">Admin</SelectItem>
+                    <SelectItem value="FARMER">Farmer</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field>
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <a
@@ -69,7 +90,12 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Field>
               <Field>
                 <Button type="submit">Login</Button>
@@ -114,9 +140,9 @@ export function LoginForm({
           <div className="relative hidden bg-muted md:block">
             <Image
               src="/placeholder.svg"
-              alt="Image"
               height={40}
               width={50}
+              alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>
@@ -127,5 +153,5 @@ export function LoginForm({
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-  )
+  );
 }
