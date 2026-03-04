@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     });
 
     const response = NextResponse.json(
-      { message: "User created successfully", userId: user.id },
+      { message: "User created successfully"},
       { status: 201 },
     );
     const token = generateToken(user.id);

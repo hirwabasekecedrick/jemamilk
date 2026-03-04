@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
+import { loginSchema } from "@/lib/validations";
+import { generateToken } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    
+    const body= await req.json();
+    const parsed = await loginSchema.safeParse(body);
 
+    if (!parsed.success) {
+      return NextResponse.json(
+        {message: "Invalid Data"},
+        { status : 400}
+      )
+    }
+    const { email, password } = parsed.data;
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -33,10 +44,19 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Login successful", userId: user.id, email: user.email },
       { status: 200 }
     );
+    const token = generateToken(user.id)
+    response.cookies.set("user", token, {
+      sameSite: true,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60,
+      path: "/",
+    })
+    return response
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(

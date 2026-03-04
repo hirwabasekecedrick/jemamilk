@@ -5,3 +5,8 @@ export const registerSchema = z.object({
     password: string().min(8, "Password weak, PLease add strong password"),
     role: z.nativeEnum(Roles)
 })
+
+export const loginSchema = z.object({
+    email: email("Email Invalid"),
+    password: string().min(8, "Password weak, PLease add strong password")
+})
