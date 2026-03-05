@@ -44,6 +44,18 @@ export async function POST(req: Request) {
       );
     }
 
+     await prisma.user.update(
+      {
+        where: {
+          id: user.id
+        },
+        data:{
+          is_active: true,
+          last_seen: `${Date.now()}`
+        }
+      }
+    )
+
     const response = NextResponse.json(
       { message: "Login successful", userId: user.id, email: user.email },
       { status: 200 }

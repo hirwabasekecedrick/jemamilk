@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validations";
-import { Roles } from "@prisma/client";
 import { generateToken } from "@/lib/auth";
 
 export async function POST(req: Request) {
@@ -38,6 +37,7 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role: role,
+        last_seen: `${Date.now}`
       },
     });
 
