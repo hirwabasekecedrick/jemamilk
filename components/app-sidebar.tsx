@@ -42,63 +42,63 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Quick Actions",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "New Entry",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Recent",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Farmers",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Milk Stock",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Datagram",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Stock",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Reports",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Work",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "Schedule",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Chat",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "Attendance",
           url: "#",
         },
         {
-          title: "Changelog",
+          title: "Announcements",
           url: "#",
         },
       ],
@@ -113,37 +113,37 @@ const data = {
           url: "#",
         },
         {
-          title: "Team",
+          title: "Appearence",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "Timers",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "Dark Mode",
           url: "#",
         },
       ],
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  // projects: [
+  //   {
+  //     name: "Design Engineering",
+  //     url: "#",
+  //     icon: Frame,
+  //   },
+  //   {
+  //     name: "Sales & Marketing",
+  //     url: "#",
+  //     icon: PieChart,
+  //   },
+  //   {
+  //     name: "Travel",
+  //     url: "#",
+  //     icon: Map,
+  //   },
+  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -154,7 +154,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} showNames/>
