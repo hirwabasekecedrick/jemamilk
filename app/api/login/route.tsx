@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         },
         data:{
           is_active: true,
-          last_seen: `${Date.now()}`
+          last_seen: new Date()
         }
       }
     )
@@ -60,15 +60,15 @@ export async function POST(req: Request) {
       { message: "Login successful", userId: user.id, email: user.email },
       { status: 200 }
     );
-    const token = generateToken(user.id)
+    const token = generateToken(user.id);
     response.cookies.set("user", token, {
-      sameSite: true,
-      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60,
       path: "/",
-    })
-    return response
+    });
+    return response;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(

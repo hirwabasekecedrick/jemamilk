@@ -12,14 +12,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import Image from "next/image"
-
+import {useRouter} from "next/navigation"
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [email,setEmail] = useState("")
       const [password,setPassword] = useState("")
-  
+    const router = useRouter()
       const handleSubmit = async (e : React.FormEvent) => {
           e.preventDefault();
   
@@ -31,7 +31,8 @@ export function LoginForm({
   
           if (res.ok) {
               const data = await res.json();
-              return console.log("User Login Succesful",data);
+               console.log("User Login Succesful",data);
+              return router.push("/dashboard")
               
           }else{
               return console.log("Failed To log in ")
@@ -107,7 +108,7 @@ export function LoginForm({
                 </Button>
               </Field>
               <FieldDescription className="text-center">
-                Don&apos;t have an account? <a href="#">Sign up</a>
+                Don&apos;t have an account? <a href="register">Sign up</a>
               </FieldDescription>
             </FieldGroup>
           </form>

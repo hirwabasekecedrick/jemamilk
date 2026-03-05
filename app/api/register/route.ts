@@ -37,7 +37,7 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role: role,
-        last_seen: `${Date.now}`
+        last_seen: new Date()
       },
     });
 

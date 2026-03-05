@@ -19,6 +19,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm({
   className,
@@ -27,6 +28,7 @@ export function RegisterForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("CUSTOMER");
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch("api/register", {
@@ -39,7 +41,7 @@ export function RegisterForm({
     if (res.ok) {
       console.log("Registration Successful");
       const data = await res.json();
-      console.log(data);
+      router.push("/dashboard");
     } else {
       console.log("Registration Failed Miserably");
     }
@@ -133,7 +135,7 @@ export function RegisterForm({
                 </Button>
               </Field>
               <FieldDescription className="text-center">
-                Don&apos;t have an account? <a href="#">Sign up</a>
+                Already have an account? <a href="login">Sign In</a>
               </FieldDescription>
             </FieldGroup>
           </form>
