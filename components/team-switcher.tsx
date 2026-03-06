@@ -18,6 +18,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
 
 export function TeamSwitcher({
   teams,
@@ -42,10 +43,13 @@ export function TeamSwitcher({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-bold">{activeTeam.name}</span>
-                <span className="truncate text-4lg">{activeTeam.plan}</span>
-              </div>
+              <Image
+                        className=""
+                        width={1000}
+                        height={60}
+                        alt="JEMAMILK"
+                        src={"/jemamilkminiLogo.jpg"}
+                      />
             </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
