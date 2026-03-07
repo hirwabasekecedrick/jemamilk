@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     try {
         const userId = await req.headers.get("actingUser");
-        console.log(userId,"Lolo");
-        
         if (!userId) {
             return NextResponse.json(
                 { message: "Invalid request - no user ID" },

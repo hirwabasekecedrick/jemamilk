@@ -29,4 +29,19 @@ model User {
   last_seen  DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  features Features[]
+}
+
+
+model Features {
+  id  String @id @default(uuid())
+  name String @unique
+  url String @unique
+  addedby String
+  added_by User @relation(fields: [addedby], references: [id])
+  roles Roles[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

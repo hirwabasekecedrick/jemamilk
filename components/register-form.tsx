@@ -31,7 +31,7 @@ export function RegisterForm({
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("api/register", {
+    const res = await fetch("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,6 +41,8 @@ export function RegisterForm({
     if (res.ok) {
       console.log("Registration Successful");
       const data = await res.json();
+      console.log(data);
+      
       router.push("/dashboard");
     } else {
       console.log("Registration Failed Miserably");
@@ -55,6 +57,7 @@ export function RegisterForm({
               src="/placeholder.svg"
               height={40}
               width={50}
+              loading="eager"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />

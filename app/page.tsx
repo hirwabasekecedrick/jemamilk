@@ -1,19 +1,22 @@
 import Features from "@/components/reusables/features";
 import Image from "next/image";
 
-export default async function Page() {
+export default function Page() {
   return (
-    <div className="flex justify-between sm:justify-center items-center h-screen w-full flex-col gap-4">
-      <div className="flex justify-center items-center w-full">
-        <Image
-          className="mt-10"
-          width={500}
-          height={60}
-          alt="JEMAMILK"
-          src={"/jemamilkminiLogo.jpg"}
-        />
-      </div>
-      <Features />
-    </div>
+    <main className="w-full">
+      <section className="flex justify-center items-center min-h-screen w-full flex-col gap-8 py-12">
+        <div className="flex justify-center items-center w-full px-4">
+          <Image
+            className="w-full max-w-md h-auto"
+            width={500}
+            height={60}
+            loading="eager"
+            alt="JEMAMILK"
+            src={"/jemamilkminiLogo.jpg"}
+          />
+        </div>
+        <Features />
+      </section>
+    </main>
   );
 }

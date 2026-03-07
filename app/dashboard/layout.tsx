@@ -1,0 +1,115 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import { NavUser } from "@/components/nav-user";
+import { ModeToggle } from "@/components/theme-toggle";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
+
+async function getUserData() {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("user")?.value;
+    
+    if (!token) {
+      return null;
+    }
+
+    const response = await fetch(
+      "http://localhost:3000/api/authenticated/user",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: `user=${token}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const userData = await response.json();
+    return {
+      name: userData.name || "User",
+      email: userData.email,
+      avatar: "/avatars/shadcn.jpg",
+    };
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    return null;
+  }
+}
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const userData = await getUserData();
+  const user = userData || {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  };
+
+  return (
+    <>
+      <SidebarProvider suppressHydrationWarning>
+        <AppSidebar user={user} />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator
+                orientation="vertical"
+                className="mr-2 data-[orientation=vertical]:h-4"
+              />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">
+                      Build Your Application
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+            <div className="flex justify-center">
+              <ModeToggle />
+              <NavUser user={user} showNames={false} />
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+          </div>
+          <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
+            {children}
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </>
+  );
+}

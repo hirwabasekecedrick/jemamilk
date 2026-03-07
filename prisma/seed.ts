@@ -1,60 +1,38 @@
 
-// import { PrismaClient, Prisma } from "@prisma/client";
-// import { PrismaPg } from "@prisma/adapter-pg";
-// import "dotenv/config";
+import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import "dotenv/config";
 
-// const adapter = new PrismaPg({
-//   connectionString: process.env.DATABASE_URL,
-// });
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
 
-// const prisma = new PrismaClient({
-//   adapter,
-// });
+const prisma = new PrismaClient({
+  adapter,
+});
 
-// const userData: Prisma.UserCreateInput[] = [
-//   {
-//     name: "Alice",
-//     email: "alice@prisma.io",
-//     posts: {
-//       create: [
-//         {
-//           title: "Join the Prisma Discord",
-//           content: "https://pris.ly/discord",
-//           published: true,
-//         },
-//         {
-//           title: "Prisma on YouTube",
-//           content: "https://pris.ly/youtube",
-//         },
-//       ],
-//     },
-//   },
-//   {
-//     name: "Bob",
-//     email: "bob@prisma.io",
-//     posts: {
-//       create: [
-//         {
-//           title: "Follow Prisma on Twitter",
-//           content: "https://www.twitter.com/prisma",
-//           published: true,
-//         },
-//       ],
-//     },
-//   },
-// ];
+const userData: Prisma.FeaturesCreateInput[] = [
+  {
+    name: "Stock",
+    url: "/stock",
+    roles: ['FARMER','VENDOR','ADMIN'],
+    added_by: {
+        connect: {id: "71d4a08b-3212-487f-a41d-099e3ebf0f2c"}
+    }
+  }
+];
 
-// export async function main() {
-//   for (const u of userData) {
-//     await prisma.user.create({ data: u });
-//   }
-// }
+export async function main() {
+  for (const u of userData) {
+    await prisma.features.create({ data: u });
+  }
+}
 
-// main()
-//   .catch((e) => {
-//     console.error(e);
-//     process.exit(1);
-//   })
-//   .finally(async () => {
-//     await prisma.$disconnect();
-//   });
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
