@@ -32,18 +32,18 @@ const FeatureCard = ({ feature }: { feature: Feature }) => (
     }}
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.98 }}
-    className="flex flex-col items-center justify-center p-4 border-2 border-red-500 rounded-2xl h-full min-h-[250px]"
+    className="flex flex-col items-center justify-center p-4 border-2 border-red-500 rounded-2xl h-full min-h-[160px]"
   >
     <div className="w-full flex justify-between gap-4 items-start">
       <p className="font-semibold">{feature.title}</p>
       <ChevronsRight className="text-red-500 flex-shrink-0" />
     </div>
-    <hr className="w-full border-red-100/50 my-3" />
-    <div className="flex-1 w-full">
-      <p className="text-sm text-gray-600 mb-2">{feature.description}</p>
+    <hr className="w-full border-red-100/50 my-1" />
+    <div className="flex-1 w-full justify-center items-center flex">
+      <p className="text-sm text-gray-600 mb-1">{feature.description}</p>
       <Item />
     </div>
-    <hr className="w-full my-3" />
+    <hr className="w-full my-1" />
     <a href={feature.url} className="w-full">
       <Button className="bg-red-500 w-full">Continue</Button>
     </a>
@@ -103,7 +103,7 @@ export default function Features() {
             .map((_, i) => (
               <div
                 key={i}
-                className="h-[250px] bg-gray-200 animate-pulse rounded-2xl"
+                className="h-62.5 bg-gray-200 animate-pulse rounded-2xl"
               />
             ))}
         </div>
@@ -112,13 +112,13 @@ export default function Features() {
   }
 
   return (
-    <section className="w-full py-12 px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-2 px-4 sm:px-6 lg:px-8">
       {error && (
         <div className="text-center mb-4 text-orange-500 text-sm">
           {error} - Please add features to the database
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
         {features.length > 0 ? (
           features.map((feature) => (
             <FeatureCard key={feature.id} feature={feature} />
