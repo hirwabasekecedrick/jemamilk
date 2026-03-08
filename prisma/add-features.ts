@@ -34,27 +34,15 @@ async function main() {
     data: [
       {
         name: "Stock Management",
-        url: "/features/stock",
+        url: "/dashboard/stock",
         addedby: systemUser.id,
         roles: ["ADMIN", "VENDOR"],
       },
       {
-        name: "Orders Tracking",
-        url: "/features/orders",
+        name: "Record ",
+        url: "/dashboard/stock",
         addedby: systemUser.id,
-        roles: ["ADMIN", "CUSTOMER", "VENDOR"],
-      },
-      {
-        name: "Analytics",
-        url: "/features/analytics",
-        addedby: systemUser.id,
-        roles: ["ADMIN", "FARMER"],
-      },
-      {
-        name: "Reports",
-        url: "/features/reports",
-        addedby: systemUser.id,
-        roles: ["ADMIN"],
+        roles: ["ADMIN", "VENDOR"],
       },
     ],
     skipDuplicates: true,
