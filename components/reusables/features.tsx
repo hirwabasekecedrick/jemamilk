@@ -118,7 +118,7 @@ export default function Features() {
           {error} - Please add features to the database
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
         {features.length > 0 ? (
           features.map((feature) => (
             <FeatureCard key={feature.id} feature={feature} />

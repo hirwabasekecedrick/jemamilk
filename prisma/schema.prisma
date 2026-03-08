@@ -19,28 +19,70 @@ enum Roles {
   VENDOR
 }
 
+enum PlanFrequency {
+  MONTHLY
+  ANNUALLY
+}
+
 model User {
   id         String   @id @default(uuid())
   email      String   @unique
   name       String?
   password   String
   role       Roles
-  is_active  Boolean @default(false)
+  is_active  Boolean  @default(false)
   last_seen  DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   features Features[]
+  tenants  Tenants[]
 }
 
+model Tenants {
+  id           String   @id @default(uuid())
+  owner        String
+  tenant_owner User     @relation(fields: [owner], references: [id])
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  payment Payment[]
+}
+
+model Payment {
+  id             String   @id @default(uuid())
+  tenant         String
+  plan           String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  tenant_company Tenants  @relation(fields: [tenant], references: [id])
+  tenant_plan    Plans    @relation(fields: [plan], references: [id])
+}
+
+model Tenant_Details {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  price      Float
+  location   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Plans {
+  id        String        @id @default(uuid())
+  name      String        @unique
+  value     String
+  frequency PlanFrequency
+  tenant    Payment[]
+}
 
 model Features {
-  id  String @id @default(uuid())
-  name String @unique
-  url String @unique
-  addedby String
-  added_by User @relation(fields: [addedby], references: [id])
-  roles Roles[]
+  id       String  @id @default(uuid())
+  name     String  @unique
+  url      String  @unique
+  addedby  String
+  added_by User    @relation(fields: [addedby], references: [id])
+  roles    Roles[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
